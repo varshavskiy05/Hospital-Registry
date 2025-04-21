@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def doctor_list(request):
+    return render(request, 'doctors/doctor_list.html')
