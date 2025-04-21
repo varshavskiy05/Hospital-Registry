@@ -6,4 +6,20 @@
 {% block navTitle %}Список пацієнтів{% endblock %}
 
 {% block content %}
+<div class="patients-content-container">
+    <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      </form>
+
+    <button type="button" class="btn btn-primary">Додати пацієнта</button>
+</div>
+
+<div class="card shadow-sm mt-3">
+    <ul id="patient-list" class="list-group list-group-flush"></ul>
+</div>
+{{ patients|json_script:"patients-data" }}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'patients/js/patients.js' %}"></script>
 {% endblock %}
