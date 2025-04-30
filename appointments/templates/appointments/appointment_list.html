@@ -1,9 +1,46 @@
 {% extends 'appointments/layout.html' %}
+{% load appointment_extras %}
 
-{% load static %}
 
-{% block title %}Appointments{% endblock %}
-{% block navTitle %}Назначення{% endblock %}
+{% block title %}Розклад прийомів{% endblock %}
+{% block navTitle %}Розклад прийомів{% endblock %}
 
 {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a href="?week_offset={{ current_offset|add:"-1" }}" class="btn btn-outline-primary">&larr; Попередній тиждень</a>
+    <h5>Тиждень: {{ week_dates.0|date:"d.m.Y" }} — {{ week_dates.6|date:"d.m.Y" }}</h5>
+    <a href="?week_offset={{ current_offset|add:"1" }}" class="btn btn-outline-primary">Наступний тиждень &rarr;</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered text-center align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Лікар</th>
+                {% for date in week_dates %}
+                    <th>{{ date|ukr_weekday }} {{ date|date:"d.m" }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for doctor in doctors %}
+                <tr>
+                    <th class="text-start">{{ doctor.first_name }} {{ doctor.last_name }}</th>
+                    {% for date in week_dates %}
+                        <td>
+                            {% for appointment in schedule|get_item:doctor.id|get_item:date %}
+                                <div class="border rounded p-1 mb-1 bg-light">
+                                    <strong>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</strong><br>
+                                    <small>{{ appointment.notes|default:"(без нотатки)" }}</small>
+                                </div>
+                            {% empty %}
+                                <span class="text-muted">—</span>
+                            {% endfor %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

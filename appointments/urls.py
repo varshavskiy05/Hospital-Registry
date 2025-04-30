@@ -5,4 +5,5 @@ app_name = 'appointments'
 
 urlpatterns = [
     path('', views.appointment_list, name='list'),
+
 ]

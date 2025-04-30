@@ -70,8 +70,6 @@
 
 
 
-
-<!-- Запис на прийом -->
 <div id="bookModal" style="display: none; position: fixed; top: 15%; left: 25%; background: #fff; padding: 20px; border: 1px solid #ccc; z-index: 1000;">
     <h5>Запис пацієнта на прийом</h5>
     <input type="hidden" id="appointmentsCreateUrl" value="{% url 'doctors:appointments_create' %}">
@@ -80,18 +78,17 @@
 
         <div class="mb-2">
             <label for="book_doctor">Лікар:</label>
-            <select name="doctor" id="book_doctor" class="form-select" required>
-                <option value="">
-                </option>
-            </select>
+            <input type="hidden" name="doctor" id="book_doctor_id">
+            <div id="book_doctor_label" class="form-control-plaintext fw-bold"></div>
         </div>
+
 
         <div class="mb-2">
             <label for="book_patient">Пацієнт:</label>
             <select name="patient" id="book_patient" class="form-select" required>
                 {% for patient in patients %}
                     <option value="{{ patient.id }}" data-phone="{{ patient.phone_number }}">
-                        {{ patient.first_name }} {{ patient.last_name }}
+                        {{ patient.first_name }} {{ patient.last_name }} {{ patient.date_of_birth }}
                     </option>
                 {% endfor %}
             </select>

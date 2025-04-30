@@ -16,10 +16,10 @@ def patient_list(request):
 def add_or_update_patient(request):
     if request.method == 'POST':
         patient_id = request.POST.get('patient_id')
-        if patient_id:  # Если передан id — редактируем существующего пациента
+        if patient_id:
             patient = get_object_or_404(Patient, pk=patient_id)
             form = PatientForm(request.POST, instance=patient)
-        else:  # Иначе — создаем нового
+        else:
             form = PatientForm(request.POST)
 
         if form.is_valid():

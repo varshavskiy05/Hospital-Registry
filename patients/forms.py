@@ -12,3 +12,14 @@ class PatientForm(forms.ModelForm):
             'admit_time': forms.TimeInput(attrs={'type': 'time'}),
             'discharge_date': forms.DateInput(attrs={'type': 'date'}),
         }
+        labels = {
+            'first_name': "Ім'я",
+            'middle_name': "По батькові",
+            'last_name': "Прізвище",
+            'phone_number': "Телефон",
+            'email': "Email",
+            'date_of_birth': "Дата народження",
+            'admit_date': "Дата госпіталізації",
+            'admit_time': "Час госпіталізації",
+            'discharge_date': "Дата виписки",
+        }

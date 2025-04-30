@@ -203,15 +203,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const modal = document.getElementById('bookModal');
         modal.style.display = 'block';
 
-        // Вставляємо єдиного лікаря у select
-        const select = document.getElementById('book_doctor');
-        select.innerHTML = ''; // очищаємо
+        document.getElementById('book_doctor_id').value = doctor.id;
+        document.getElementById('book_doctor_label').textContent = `${doctor.first_name} ${doctor.last_name}`;
 
-        const option = document.createElement('option');
-        option.value = doctor.id;
-        option.textContent = `${doctor.first_name} ${doctor.last_name}`;
-        option.selected = true;
-        select.appendChild(option);
 
         // Очищуємо інші поля
         document.getElementById('book_patient').value = '';

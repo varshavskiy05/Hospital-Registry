@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const editButton = document.createElement("button");
             editButton.className = "btn btn-sm btn-primary";
-            editButton.textContent = "Edit";
+            editButton.textContent = "Редагувати";
             editButton.type = "button";
             editButton.addEventListener('click', function() {
                 openEditModal(patient);
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const infoButton = document.createElement("button");
             infoButton.className = "btn btn-sm btn-secondary";
-            infoButton.textContent = "Info";
+            infoButton.textContent = "Інформація";
             infoButton.type = "button";
             infoButton.addEventListener('click', function() {
                 openInfoModal(patient);
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const deleteButton = document.createElement("button");
             deleteButton.className = "btn btn-sm btn-danger";
-            deleteButton.textContent = "Delete";
+            deleteButton.textContent = "Видалити";
             deleteButton.type = "button";
             deleteButton.addEventListener('click', function() {
                 deletePatient(patient.id);
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('infoModal').style.display = 'none';
     });
 
-    // Отправка формы
+
     document.getElementById('patientForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
