@@ -3,6 +3,8 @@ from django.db import models
 
 class Doctor(models.Model):
     first_name = models.CharField(max_length=100)
+    middle_name = models.CharField(max_length=100, blank=True, null=True)
+    cabinet = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100)
     specialty = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=100, blank=True, null=True)
