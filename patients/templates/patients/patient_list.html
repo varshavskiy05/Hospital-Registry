@@ -1,0 +1,47 @@
+{% extends 'patients/layout.html' %}
+
+{% load static %}
+
+{% block title %}Patient{% endblock %}
+{% block navTitle %}Список пацієнтів{% endblock %}
+
+{% block content %}
+<div class="patients-content-container">
+    <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" id="searchInput" placeholder="Search" aria-label="Search">
+      </form>
+
+    <button type="button" id="addPatientBtn" class="btn btn-primary">Додати пацієнта</button>
+</div>
+
+
+<div class="card shadow-sm mt-3">
+    <ul id="patient-list" class="list-group list-group-flush"></ul>
+</div>
+
+<div id="patientModal" style="display: none; position: fixed; top: 20%; left: 40%; background:#fff; padding:20px; border:1px solid #ccc; border-radius: 8px;">
+    <h3>Новий пацієнт</h3>
+    <form id="patientForm">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="patient_id" id="patient_id">
+        <button type="submit" class="btn btn-primary" data-add-url="{% url 'patients:add_or_update_patient' %}" id="savePatientBtn">Зберегти</button>
+        <button type="button" id="closeModalBtn" class="btn btn-secondary">Закрити</button>
+    </form>
+</div>
+
+
+<div id="infoModal" style="display:none; position:fixed; top:20%; left:40%; background:#fff; padding:20px; border:1px solid #ccc; z-index:1000; border-radius: 8px;">
+    <h3>Інформація про пацієнта</h3>
+    <div id="infoContent"></div>
+    <button type="button" id="closeInfoBtn" class="btn btn-secondary">Закрити</button>
+</div>
+
+
+{{ patients|json_script:"patients-data" }}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'patients/js/patients.js' %}"></script>
+<script src="{% static 'patients/js/add_patient.js' %}"></script>
+{% endblock %}

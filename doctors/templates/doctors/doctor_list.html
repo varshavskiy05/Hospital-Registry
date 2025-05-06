@@ -1,0 +1,126 @@
+{% extends 'doctors/layout.html' %}
+
+{% load static %}
+
+{% block title %}Doctors{% endblock %}
+{% block navTitle %}Список Лікарів{% endblock %}
+
+{% block content %}
+<div class="doctors-content-container">
+    <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" id="searchInput" placeholder="Search" aria-label="Search">
+      </form>
+
+    <button type="button" id="addDoctorBtn" class="btn btn-primary">Додати лікаря</button>
+</div>
+
+
+<div class="card shadow-sm mt-3">
+    <ul id="doctor-list" class="list-group list-group-flush"></ul>
+</div>
+
+    <!-- Модальне вікно Info -->
+<div id="infoModal" style="display:none; position:fixed; top:20%; left:40%; background:#fff; padding:20px; border:1px solid #ccc; z-index:1000; border-radius: 8px;">
+    <h5>Інформація про лікаря</h5>
+    <div id="infoContent"></div>
+    <button type="button" id="closeInfoModal" class="btn btn-secondary mt-2">Закрити</button>
+</div>
+
+<!-- Модальне вікно Edit -->
+<div id="editModal" style="display:none; position:fixed; top:10%; left:40%; background:#fff; padding:20px; border:1px solid #ccc; z-index:1000; border-radius: 8px;">
+    <h5>Редагувати лікаря</h5>
+    <form>
+        <input type="hidden" id="edit_doctor_id">
+
+        <div class="mb-2"><label>Ім’я:</label>
+            <input type="text" id="edit_first_name" class="form-control"></div>
+
+        <div class="mb-2"><label>По батькові:</label>
+            <input type="text" id="edit_middle_name" class="form-control"></div>
+
+        <div class="mb-2"><label>Прізвище:</label>
+            <input type="text" id="edit_last_name" class="form-control"></div>
+
+        <div class="mb-2"><label>Спеціальність:</label>
+            <input type="text" id="edit_specialty" class="form-control"></div>
+
+        <div class="mb-2"><label>Телефон:</label>
+            <input type="text" id="edit_phone_number" class="form-control"></div>
+
+        <div class="mb-2"><label>Email:</label>
+            <input type="email" id="edit_email" class="form-control"></div>
+
+        <div class="mb-2"><label>Дата народження:</label>
+            <input type="date" id="edit_date_of_birth" class="form-control"></div>
+
+        <div class="mb-2"><label>Дата прийому на роботу:</label>
+            <input type="date" id="edit_hire_date" class="form-control"></div>
+
+        <div class="mb-2"><label>Дата звільнення:</label>
+            <input type="date" id="edit_fire_date" class="form-control"></div>
+
+        <div class="mb-2"><label>Кабінет:</label>
+            <input type="text" id="edit_cabinet" class="form-control">
+        </div>
+
+        <button type="button" id="saveDoctorBtn" class="btn btn-primary">Зберегти</button>
+        <button type="button" id="closeEditModal" class="btn btn-secondary">Закрити</button>
+    </form>
+</div>
+
+
+
+<div id="bookModal" style="display: none; position: fixed; top: 10%; left: 45%; background: #fff; padding: 20px; border: 1px solid #ccc; z-index: 1000; border-radius: 8px;">
+    <h5>Запис пацієнта на прийом</h5>
+    <input type="hidden" id="appointmentsCreateUrl" value="{% url 'doctors:appointments_create' %}">
+    <form id="bookForm" method="POST" action="{% url 'doctors:appointments_create' %}">
+        {% csrf_token %}
+
+        <div class="mb-2">
+            <label for="book_doctor">Лікар:</label>
+            <input type="hidden" name="doctor" id="book_doctor_id">
+            <div id="book_doctor_label" class="form-control-plaintext fw-bold"></div>
+        </div>
+
+
+        <div class="mb-2">
+            <label for="book_patient">Пацієнт:</label>
+            <select name="patient" id="book_patient" class="form-select" required>
+                {% for patient in patients %}
+                    <option value="{{ patient.id }}" data-phone="{{ patient.phone_number }}">
+                        {{ patient.first_name }} {{ patient.last_name }} {{ patient.date_of_birth }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-2">
+            <label for="book_phone">Телефон:</label>
+            <input type="text" name="phone" id="book_phone" class="form-control" required>
+        </div>
+
+        <div class="mb-2">
+            <label for="book_date">Дата прийому:</label>
+            <input type="date" name="appointment_date" id="book_date" class="form-control" required>
+        </div>
+
+
+        <div class="mb-2">
+            <label for="book_note">Нотатка:</label>
+            <textarea name="note" id="book_note" class="form-control"></textarea>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+            <button type="submit" class="btn btn-primary">Підтвердити</button>
+            <button type="button" id="closeBookModal" class="btn btn-secondary">Скасувати</button>
+        </div>
+    </form>
+</div>
+
+
+{{ doctors|json_script:"doctor-data" }}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'doctors/js/doctor.js' %}"></script>
+{% endblock %}
