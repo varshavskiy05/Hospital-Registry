@@ -19,16 +19,64 @@
     <ul id="patient-list" class="list-group list-group-flush"></ul>
 </div>
 
-<div id="patientModal" style="display: none; position: fixed; top: 20%; left: 40%; background:#fff; padding:20px; border:1px solid #ccc; border-radius: 8px;">
-    <h3>Новий пацієнт</h3>
+<div id="patientModal" style="display: none; position: fixed; top: 10%; left: 40%; background:#fff; padding: 20px; border: 1px solid #ccc; z-index: 1000; border-radius: 8px;">
+    <h5 id="modalPatientTitle">Новий пацієнт</h5>
     <form id="patientForm">
         {% csrf_token %}
-        {{ form.as_p }}
         <input type="hidden" name="patient_id" id="patient_id">
-        <button type="submit" class="btn btn-primary" data-add-url="{% url 'patients:add_or_update_patient' %}" id="savePatientBtn">Зберегти</button>
-        <button type="button" id="closeModalBtn" class="btn btn-secondary">Закрити</button>
+
+        <div class="mb-2">
+            <label>Ім’я:</label>
+            <input type="text" name="first_name" class="form-control">
+        </div>
+
+        <div class="mb-2">
+            <label>По батькові:</label>
+            <input type="text" name="middle_name" class="form-control">
+        </div>
+
+        <div class="mb-2">
+            <label>Прізвище:</label>
+            <input type="text" name="last_name" class="form-control">
+        </div>
+
+        <div class="mb-2">
+            <label>Телефон:</label>
+            <input type="text" name="phone_number" class="form-control">
+        </div>
+
+        <div class="mb-2">
+            <label>Email:</label>
+            <input type="email" name="email" class="form-control">
+        </div>
+
+        <div class="mb-2">
+            <label>Дата народження:</label>
+            <input type="date" name="date_of_birth" class="form-control">
+        </div>
+
+        <div class="mb-2">
+            <label>Дата госпіталізації:</label>
+            <input type="date" name="admit_date" class="form-control">
+        </div>
+
+        <div class="mb-2">
+            <label>Час госпіталізації:</label>
+            <input type="time" name="admit_time" class="form-control">
+        </div>
+
+        <div class="mb-2">
+            <label>Дата виписки:</label>
+            <input type="date" name="discharge_date" class="form-control">
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+            <button type="submit" class="btn btn-primary" data-add-url="{% url 'patients:add_or_update_patient' %}" id="savePatientBtn">Зберегти</button>
+            <button type="button" id="closeModalBtn" class="btn btn-secondary">Закрити</button>
+        </div>
     </form>
 </div>
+
 
 
 <div id="infoModal" style="display:none; position:fixed; top:20%; left:40%; background:#fff; padding:20px; border:1px solid #ccc; z-index:1000; border-radius: 8px;">
